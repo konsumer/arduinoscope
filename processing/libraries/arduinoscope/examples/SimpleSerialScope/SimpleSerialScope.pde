@@ -66,7 +66,7 @@ void setup(){
   // this holds the values that show in scopes.
   vals = new int[scopes.length];
 
-  //TODO: add buttons to array for draw() & mousePressed()
+  //TODO: add buttons to array for draw() & 
   
   // setup serial
   port = new Serial(this, Serial.list()[0], 115200);
@@ -77,21 +77,24 @@ void setup(){
 void draw()
 {
   background(0);
+
+  // conversion multiplier for voltage, based on first scope
+  float multiplier = scopes[0].getMultiplier()/scopes[0].getResolution();
   
-  for (int i=0;i<scopes.length;i++){
-    // update and draw scopes
-    
+  // convert arduino vals to voltage
+  float minval = scopes[0].getMinval() * multiplier;
+  float maxval = scopes[0].getMaxval() * multiplier;
+
+  // dimensions of scope, based on first scope
+  int[] dim = scopes[0].getDim();
+  
+  float pinval;
+  int[] pos;
+  
+
+  for (int i=0;i<scopes.length;i++){    
     scopes[i].addData(vals[i]);
     scopes[i].draw();
-    
-    // conversion multiplier for voltage
-    float multiplier = scopes[i].getMultiplier()/scopes[i].getResolution();
-    
-    // convert arduino vals to voltage
-    float minval = scopes[i].getMinval() * multiplier;
-    float maxval = scopes[i].getMaxval() * multiplier;
-    int[] values = scopes[i].getValues(); 
-    float pinval =  values[values.length-1] * multiplier;
 
     //TODO:  draw buttons
     
@@ -99,10 +102,11 @@ void draw()
     scopes[i].drawBounds();
     stroke(255);
     
-    int[] pos = scopes[i].getPos();
-    int[] dim = scopes[i].getDim();
+    pos = scopes[i].getPos();
     
     line(0, pos[1], width, pos[1]);
+
+    pinval =  vals[vals.length-1] * multiplier;
     
     // add labels
     fill(255);
@@ -117,8 +121,7 @@ void draw()
     text("pin: " + i, dim[0] + 10,pos[1] + dim[1] - 10);
   }
   
-  // draw text seperator, based on first scope
-  int[] dim = scopes[0].getDim();
+  // draw text seperator, based on last scope drawn
   stroke(255);
   line(dim[0], 0, dim[0], height);
   
