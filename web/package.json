@@ -3,9 +3,9 @@
   "version":"0.0.1",
   "private": true,
   "dependencies": {
+    "serialport": "",
     "firmata":"",
     "socket.io": "",
-    "express":"",
-    "serialport": ""
+    "express":""
   }
 }

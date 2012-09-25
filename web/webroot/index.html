@@ -1,0 +1,114 @@
+<html>
+  <head>
+    <title>Arduinoscope</title>
+    <style type="text/css">
+      html, body, form {
+        margin:0;
+        padding:0;
+      }
+
+      body {
+        font-family: sans-serif;
+      }
+
+      .controls {
+        width: 10%;
+        display:inline-block;
+        vertical-align:top;
+      }
+
+      canvas {
+        width: 89%;
+      }
+
+      .scope {
+        border-bottom: 1px solid #000;
+      }
+    </style>
+
+    <script type="template" id="hardware_form">
+      <form id="hardware">
+        <select id="serialport">
+          <% for (i in ports){ %>
+            <option value="<%= i %>"><%= ports[i] %></option>
+          <% } %>
+        </select>
+        <input type="submit" />
+      </form>
+    </script>
+
+    <script type="template" id="scope_form">
+      <form id="scope">
+        How many scopes would you like?
+        <select id="count">
+        <% for (i=1;i<17;i++){ %>
+          <option value="<%=i %>"><%=i %></option>
+        <% } %>
+        </select>
+        <input type="submit" />
+      </form>
+    </script>
+
+    <script type="template" id="osc">
+      <div class="scope" id="scope<%= id %>">
+        <canvas />
+        <div class="controls">
+        pin: <select class="pin">
+          <option value="">none</option>
+          <% for (i=0;i<16;i++){ %>
+            <option value="<%=i %>"><%=i %></option>
+          <% } %>
+        </select>
+        </div>
+      </div>
+    </script>
+
+  </head>
+  <body>
+  </body>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
+<script>
+  function tpl(selector){
+    var $sel = $(selector);
+    return _.template($sel.html());
+  }
+
+  var socket = io.connect();
+
+  socket.emit('list', {});
+  socket.on('list', function(data){
+    $('body').html(tpl('#hardware_form')(data));
+  });
+
+  $('#hardware').live('submit', function(){
+    socket.emit('arduino_connect', {port:$('#serialport').val()});
+    return false;
+  });
+
+  $('#scope').live('submit', function(){
+    var scope_count = parseFloat($('#count').val());
+    $('body').html("");
+    var osc = tpl('#osc');
+    for (var i=0; i< scope_count; i++){
+      $('body').append(osc({id:i})+"");
+    }
+    return false;
+  });
+
+  $('.scope .pin').live('change', function(){
+    $pin = $(this);
+    if ($pin.val() != ''){
+      socket.emit('setpin', {scope: $pin.parent().parent().get(0).id.replace("scope","");, pin: $pin.val()});
+    }
+  });
+
+  socket.on('arduino_connect', function(data){
+    $('body').html(tpl('#scope_form')());
+  });
+</script>
+
+</html>
