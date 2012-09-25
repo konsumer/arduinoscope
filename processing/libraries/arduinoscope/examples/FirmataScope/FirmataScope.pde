@@ -1,5 +1,5 @@
 /*
-  This is a basic serial arduinoscope.
+  This is a firmata-based arduinoscope for processing.
 
   (c) 2012 David Konsumer <david.konsumer@gmail.com>
 
@@ -21,14 +21,8 @@
 
 /*
 
-Serial data comes in, in the format
-
-1 23 34 4 5 76
-1 23 34 4 5 76
-1 23 34 4 5 76
-1 23 34 4 5 76
-
-(space seperates pin=data, LF-seperated frame data)
+For this to work, you need to install Firmata on your arduino:
+in arduino IDE: File -> Open -> Examples > Library-Firmata > StandardFirmata
 
 */
 
@@ -43,6 +37,7 @@ int[2] dim;
 float multiplier;
 float minval;
 float maxval;
+float pinval;
 
 void setup(){
   size(800, 800, P2D);
@@ -68,8 +63,6 @@ void setup(){
 
   // get info from 1st scope
   multiplier = scopes[0].getMultiplier()/scopes[0].getResolution();
-  minval = scopes[0].getMinval() * multiplier;
-  maxval = scopes[0].getMaxval() * multiplier;
 
   //TODO: add buttons to array for draw() & mousePressed()
 }
@@ -85,12 +78,15 @@ void draw()
   for (int i=0;i<scopes.length;i++){
     // update and draw scopes
 
-    scopes[i].addData(arduino.analogRead(i));
+    pinval = arduino.analogRead(i);
+
+    scopes[i].addData(pinval);
     scopes[i].draw();
 
     // convert arduino vals to voltage
-    int[] values = scopes[i].getValues();
-    float pinval =  values[values.length-1] * multiplier;
+    float pinval =  pinval * multiplier;
+    minval = scopes[i].getMinval() * multiplier;
+    maxval = scopes[i].getMaxval() * multiplier;
 
     // add lines
     scopes[i].drawBounds();
