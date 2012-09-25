@@ -11,11 +11,11 @@ If you don't care about developing teh front-end, or don't want to install any d
 
 This is a up-to-date port of my original oscilliscope. It is also the source for the stand-alone apps.
 
-If you want to modify the processing front-end, see [instructions](processing/).
+If you want to modify the processing front-end, see [instructions](https://github.com/konsumer/arduinoscope/tree/master/processing).
 
 
 ## Node/web
 
-This is my new and fovorite GUI for the arduino.  You will need to install [node.js & npm](http://nodejs.org/download/) and follow the [instructions](web/) for that frontend.
+This is my new and fovorite GUI for the arduino.  You will need to install [node.js & npm](http://nodejs.org/download/) and follow the [instructions](https://github.com/konsumer/arduinoscope/tree/master/web) for that frontend.
 
 If I can figure out a good way to make a stand-alone no install version of this, I will migrate the stand-alone apps to this front-end.
