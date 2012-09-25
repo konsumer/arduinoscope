@@ -24,6 +24,9 @@
 For this to work, you need to install Firmata on your arduino:
 in arduino IDE: File -> Open -> Examples > Library-Firmata > StandardFirmata
 
+You also need to install the Processing firmata library:
+http://www.arduino.cc/playground/Interfacing/Processing
+
 */
 
 import arduinoscope.*;
