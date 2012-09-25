@@ -12,9 +12,15 @@ app.get('/', function (req, res) {
 });
 
 io.sockets.on('connection', function (socket) {
+  // get a list of available arduinos
+  socket.on('list', function(data){
+
+  });
+
+  // connect to a specific arduino
   socket.on('connect', function (data) {
     arduino = new firmata.Board(data.path, function(){
-
+      socket.emit('connected', data);
     });
   });
 });
