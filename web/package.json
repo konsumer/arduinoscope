@@ -5,6 +5,7 @@
   "dependencies": {
     "firmata":"",
     "socket.io": "",
-    "express":""
+    "express":"",
+    "serialport": ""
   }
 }
