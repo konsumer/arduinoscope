@@ -1,10 +1,10 @@
 # Arduinoscope
 
-This is the current version of my Arduino-powered low-resolution, multi-channel oscilliscope. I made 2 frontends, that both speak [firmata](http://firmata.org/wiki/Download#Arduino.2FWiring), so you will need to install that on your arduino. It used to run over a simple serial protocol, but I have decided to standardize on firmata, so I can keep the pin-reading code in the client.
+This is the current version of my Arduino-powered low-resolution, multi-channel oscilliscope. I made 2 frontends, that both speak [firmata](http://firmata.org/wiki/Download#Arduino.2FWiring), so you will need to install that on your arduino. It used to run over a simple serial protocol, but I have decided to standardize on firmata, so I can keep the pin-reading code in the client, and make installation more standardized.
 
 ## Standalone
 
-If you don't care about developing teh front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the [downloads](https://github.com/konsumer/arduinoscope/downloads) section.
+If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the [downloads](https://github.com/konsumer/arduinoscope/downloads) section.
 
 
 ## Processing
