@@ -1,7 +1,7 @@
 /*
   This is a basic serial arduinoscope.
   
-  (c) 2009 David Konsumer <david.konsumer@gmail.com>
+  (c) 2012 David Konsumer <david.konsumer@gmail.com>
   
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -63,8 +63,10 @@ void setup(){
     scopes[i].setLine_color(color((int)random(255), (int)random(127)+127, 255));
   }
   
-  // this holds teh values that show in scopes.
+  // this holds the values that show in scopes.
   vals = new int[scopes.length];
+
+  //TODO: add buttons to array for draw() & mousePressed()
   
   // setup serial
   port = new Serial(this, Serial.list()[0], 115200);
@@ -90,6 +92,8 @@ void draw()
     float maxval = scopes[i].getMaxval() * multiplier;
     int[] values = scopes[i].getValues(); 
     float pinval =  values[values.length-1] * multiplier;
+
+    //TODO:  draw buttons
     
     // add lines
     scopes[i].drawBounds();
@@ -130,9 +134,5 @@ void serialEvent(Serial p) {
 
 // handle button clicked
 void mousePressed() {
-  print(mouseX);
-  print ("x");
-  print(mouseY);
-  print ("\n");
 }
 
