@@ -1,19 +1,20 @@
-var firmata = require('firmata');
-var io = require('socket.io');
-var static = require('node-static');
+var app = require('express')(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server),
+    firmata = require('firmata');
 
 var arduino;
 
-/*
-var arduino = new firmata.Board('path to usb',function(){
-  //arduino is ready to communicate
+server.listen(8080);
+
+app.get('/', function (req, res) {
+  res.sendfile(__dirname + '/index.html');
 });
-*/
 
+io.sockets.on('connection', function (socket) {
+  socket.on('connect', function (data) {
+    arduino = new firmata.Board(data.path, function(){
 
-var file = new(static.Server)('./webroot');
-require('http').createServer(function (request, response) {
-    request.addListener('end', function () {
-        file.serve(request, response);
     });
-}).listen(8080);
+  });
+});
