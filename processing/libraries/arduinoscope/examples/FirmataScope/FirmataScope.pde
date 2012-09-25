@@ -1,8 +1,8 @@
 /*
   This is a basic serial arduinoscope.
-  
+
   (c) 2012 David Konsumer <david.konsumer@gmail.com>
-  
+
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -33,105 +33,84 @@ Serial data comes in, in the format
 */
 
 import arduinoscope.*;
-import processing.serial.*;
+import cc.arduino.*;
 
-int LINE_FEED=10;
 PFont fontLarge;
 PFont fontSmall;
 Oscilloscope[] scopes = new Oscilloscope[6];
-Serial port;
-int[] vals;
+Arduino arduino;
+int[2] dim;
+float multiplier;
+float minval;
+float maxval;
 
 void setup(){
   size(800, 800, P2D);
-  
+  arduino = new Arduino(this, Arduino.list()[0], 115200);
+
   // set these up under tools/create font, if they are not setup.
   fontLarge = loadFont("TrebuchetMS-20.vlw");
   fontSmall = loadFont("Uni0554-8.vlw");
-  
-  int[] dimv = new int[2];
-  dimv[0] = width-130; // 130 margin for text
-  dimv[1] = height/scopes.length;
-  
+
+  dim[0] = width-130; // 130 margin for text
+  dim[1] = height/scopes.length;
+
   for (int i=0;i<scopes.length;i++){
+    arduino.pinMode(i, Arduino.INPUT);
     int[] posv = new int[2];
     posv[0]=0;
-    posv[1]=dimv[1]*i;
+    posv[1]=dim[1]*i;
 
     // random color, that will look nice and be visible
     scopes[i] = new Oscilloscope(this, posv, dimv);
     scopes[i].setLine_color(color((int)random(255), (int)random(127)+127, 255));
   }
-  
-  // this holds the values that show in scopes.
-  vals = new int[scopes.length];
 
-  //TODO: add buttons to array for draw() & 
-  
-  // setup serial
-  port = new Serial(this, Serial.list()[0], 115200);
-  port.clear();
-  port.bufferUntil(LINE_FEED);
+  // get info from 1st scope
+  multiplier = scopes[0].getMultiplier()/scopes[0].getResolution();
+  minval = scopes[0].getMinval() * multiplier;
+  maxval = scopes[0].getMaxval() * multiplier;
+
+  //TODO: add buttons to array for draw() & mousePressed()
 }
 
 void draw()
 {
   background(0);
 
-  // conversion multiplier for voltage, based on first scope
-  float multiplier = scopes[0].getMultiplier()/scopes[0].getResolution();
-  
-  // convert arduino vals to voltage
-  float minval = scopes[0].getMinval() * multiplier;
-  float maxval = scopes[0].getMaxval() * multiplier;
+  // draw text seperator, based on first scope
+  stroke(255);
+  line(dim[0], 0, dim[0], height);
 
-  // dimensions of scope, based on first scope
-  int[] dim = scopes[0].getDim();
-  
-  float pinval;
-  int[] pos;
-  
+  for (int i=0;i<scopes.length;i++){
+    // update and draw scopes
 
-  for (int i=0;i<scopes.length;i++){    
-    scopes[i].addData(vals[i]);
+    scopes[i].addData(arduino.analogRead(i));
     scopes[i].draw();
 
-    //TODO:  draw buttons
-    
+    // convert arduino vals to voltage
+    int[] values = scopes[i].getValues();
+    float pinval =  values[values.length-1] * multiplier;
+
     // add lines
     scopes[i].drawBounds();
     stroke(255);
-    
-    pos = scopes[i].getPos();
-    
+
+    int[] pos = scopes[i].getPos();
+
     line(0, pos[1], width, pos[1]);
 
-    pinval =  vals[vals.length-1] * multiplier;
-    
     // add labels
     fill(255);
     textFont(fontLarge);
     text(pinval, width-60, pos[1] + dim[1] - 10);
-    
+
     textFont(fontSmall);
     text("min: " + minval, dim[0] + 10, pos[1] + 40);
     text("max: " + maxval, dim[0] + 10, pos[1] + 48);
-    
+
     fill(scopes[i].getLine_color());
     text("pin: " + i, dim[0] + 10,pos[1] + dim[1] - 10);
-  }
-  
-  // draw text seperator, based on last scope drawn
-  stroke(255);
-  line(dim[0], 0, dim[0], height);
-  
-}
-
-// handle serial data
-void serialEvent(Serial p) { 
-  String data = p.readStringUntil(LINE_FEED);
-  if (data != null) {
-    vals = int(split(data, ' '));
   }
 }
 

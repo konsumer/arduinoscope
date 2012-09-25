@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "firmata":"",
+    "socket.io": "",
+    "node-static":""
+  }
+}
