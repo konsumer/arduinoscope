@@ -1,0 +1,43 @@
+body {
+  font-family: sans-serif;
+}
+
+#settings div {
+  display:inline-block;
+  margin-right:10px;
+}
+
+.scope {
+  background: #eee;
+  margin-bottom: 10px;
+  width: 100%;
+  position:relative;
+}
+
+.scope div {
+  width: 200px;
+  background: blue;
+  position:absolute;
+  right:0;
+  top:0;
+  padding: 0 10px;
+}
+
+.scope div, .scope div a, .scope div a:visited {
+  color: white;
+}
+
+.scope, .scope div {
+  height: 200px;
+}
+
+.scope div textarea {
+  width: 100%;
+  height: 120px;
+}
+
+svg {
+  margin-left: 1%;
+  background: red;
+  width: 78%;
+}

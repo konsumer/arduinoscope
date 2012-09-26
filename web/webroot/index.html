@@ -1,114 +1,51 @@
 <html>
   <head>
-    <title>Arduinoscope</title>
-    <style type="text/css">
-      html, body, form {
-        margin:0;
-        padding:0;
-      }
-
-      body {
-        font-family: sans-serif;
-      }
-
-      .controls {
-        width: 10%;
-        display:inline-block;
-        vertical-align:top;
-      }
-
-      canvas {
-        width: 89%;
-      }
-
-      .scope {
-        border-bottom: 1px solid #000;
-      }
-    </style>
-
-    <script type="template" id="hardware_form">
-      <form id="hardware">
-        <select id="serialport">
-          <% for (i in ports){ %>
-            <option value="<%= i %>"><%= ports[i] %></option>
-          <% } %>
-        </select>
-        <input type="submit" />
-      </form>
-    </script>
-
-    <script type="template" id="scope_form">
-      <form id="scope">
-        How many scopes would you like?
-        <select id="count">
-        <% for (i=1;i<17;i++){ %>
-          <option value="<%=i %>"><%=i %></option>
-        <% } %>
-        </select>
-        <input type="submit" />
-      </form>
-    </script>
-
-    <script type="template" id="osc">
-      <div class="scope" id="scope<%= id %>">
-        <canvas />
-        <div class="controls">
-        pin: <select class="pin">
-          <option value="">none</option>
-          <% for (i=0;i<16;i++){ %>
-            <option value="<%=i %>"><%=i %></option>
-          <% } %>
-        </select>
-        </div>
-      </div>
-    </script>
-
+    <title>arduinoscope</title>
+    <link href="site.css" media="screen" rel="stylesheet" type="text/css" />
   </head>
   <body>
+    <header>
+      <h1>arduinoscope</h1>
+    </header>
+
+    <form id="settings">
+      <div>
+        <label for="port">port</label>
+        <select name="port" id="port"></select>
+      </div>
+      <div>
+        <label for="count"># of scopes</label>
+        <select name="count" id="count">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+          <option>6</option>
+          <option>7</option>
+          <option>8</option>
+          <option>9</option>
+          <option>10</option>
+          <option>11</option>
+          <option>12</option>
+        </select>
+      </div>
+      <input type="submit" value="set" />
+    </form>
+
+    <section id="scopes">
+      <article class="scope">
+        <svg></svg>
+        <div>
+          <p>code to run in oscope <a class=".code_help" href="#code_help">?</a><p>
+          <textarea class="code">// analog pin0 to voltage
+return ( analogRead(0) * 4.9 ) / 1000</textarea>
+        </div>
+      </article>
+    </section>
+
   </body>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"></script>
-<script>
-  function tpl(selector){
-    var $sel = $(selector);
-    return _.template($sel.html());
-  }
-
-  var socket = io.connect();
-
-  socket.emit('list', {});
-  socket.on('list', function(data){
-    $('body').html(tpl('#hardware_form')(data));
-  });
-
-  $('#hardware').live('submit', function(){
-    socket.emit('arduino_connect', {port:$('#serialport').val()});
-    return false;
-  });
-
-  $('#scope').live('submit', function(){
-    var scope_count = parseFloat($('#count').val());
-    $('body').html("");
-    var osc = tpl('#osc');
-    for (var i=0; i< scope_count; i++){
-      $('body').append(osc({id:i})+"");
-    }
-    return false;
-  });
-
-  $('.scope .pin').live('change', function(){
-    $pin = $(this);
-    if ($pin.val() != ''){
-      socket.emit('setpin', {scope: $pin.parent().parent().get(0).id.replace("scope","");, pin: $pin.val()});
-    }
-  });
-
-  socket.on('arduino_connect', function(data){
-    $('body').html(tpl('#scope_form')());
-  });
-</script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="site.js"></script>
 </html>

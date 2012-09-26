@@ -38,5 +38,11 @@ io.sockets.on('connection', function (socket) {
       data.error={msg: "port not found"};
       socket.emit('arduino_connect', data);
     }
+
+  });
+
+  // get a list of pins
+  socket.on('get_pins', function (data) {
+    console.dir(arduino);
   });
 });
