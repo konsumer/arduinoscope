@@ -37,7 +37,7 @@
       <article class="scope">
         <svg></svg>
         <div>
-          <p>code to run in oscope <a class=".code_help" href="#code_help">?</a><p>
+          <p>code to run in oscope <a class="code_help" href="#code_help">?</a><p>
           <textarea class="code">// analog pin0 to voltage
 return ( analogRead(0) * 4.9 ) / 1000</textarea>
         </div>
@@ -45,10 +45,25 @@ return ( analogRead(0) * 4.9 ) / 1000</textarea>
     </section>
 
     <section id="code_help">
-      <p>This scope uses inline javascript code to create oscopes.</p>
-      <p>This means ultimate control, and you can do anything you like with the scope.</p>
-      <p>Your code's return value is 0-5, representing voltage, run in the fastest loop possible. Anything else you want to do is up to you, including slowing down reads with delays, triggering pins.</p>>
-    </p>
+      <div class="overlay_content">
+        <a class="code_help close" href="#code_help">X</a>
+        <div class="content">
+          <h3>Code Help</h3>
+          <p>You can use code for the hardware interface to process. It uses standard javascript.</p>
+          <p>This means ultimate control, and you can do anything you like with the scope, as long as it will run in it's code sandbox.</p>
+          <p>Your code's return value is 0-5, representing voltage, run in the fastest loop possible. Anything else you want to do is up to you, including slowing down reads with delays, triggering pins, etc.</p>
+
+          <h4>Arduino Functions Available</h4>
+          <p>Pin numbers start at 0.</p>
+          <ul>
+            <li><strong>analogRead(pin)</strong> - read an analog pin.</li>
+            <li><strong>analogWrite(pin, value)</strong> - write to an analog pin. value is 0-255.</li>
+            <li><strong>digitalRead(pin)</strong> - read a digital pin.</li>
+            <li><strong>digitalWrite(pin, value)</strong> - write to a digital pin. value is 0 or 1.</li>
+          </ul>
+      </div>
+      </div>
+    </section>
 
   </body>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>

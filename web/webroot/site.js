@@ -33,7 +33,7 @@ $(function(){
   });
 
   $(".code_help").click(function(){
-    $('#code_help').toggle();
+    $('#code_help').show();
     return false;
   });
 
