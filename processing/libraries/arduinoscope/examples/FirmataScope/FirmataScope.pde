@@ -1,5 +1,5 @@
 /*
-  This is a firmata-based arduinoscope for processing.
+  This is a Firmata-based arduinoscope for processing.
 
   (c) 2012 David Konsumer <david.konsumer@gmail.com>
 
