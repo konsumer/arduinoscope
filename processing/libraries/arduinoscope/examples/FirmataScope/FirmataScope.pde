@@ -28,15 +28,15 @@ You also need to install the Processing firmata library:
 http://www.arduino.cc/playground/Interfacing/Processing
 
 */
-
 import arduinoscope.*;
+import processing.serial.*;
 import cc.arduino.*;
 
 PFont fontLarge;
 PFont fontSmall;
 Oscilloscope[] scopes = new Oscilloscope[6];
 Arduino arduino;
-int[2] dim;
+int[] dim;
 float multiplier;
 float minval;
 float maxval;
@@ -60,7 +60,7 @@ void setup(){
     posv[1]=dim[1]*i;
 
     // random color, that will look nice and be visible
-    scopes[i] = new Oscilloscope(this, posv, dimv);
+    scopes[i] = new Oscilloscope(this, posv, dim);
     scopes[i].setLine_color(color((int)random(255), (int)random(127)+127, 255));
   }
 
@@ -83,11 +83,11 @@ void draw()
 
     pinval = arduino.analogRead(i);
 
-    scopes[i].addData(pinval);
+    scopes[i].addData(int(pinval));
     scopes[i].draw();
 
     // convert arduino vals to voltage
-    float pinval =  pinval * multiplier;
+    pinval =  pinval * multiplier;
     minval = scopes[i].getMinval() * multiplier;
     maxval = scopes[i].getMaxval() * multiplier;
 
