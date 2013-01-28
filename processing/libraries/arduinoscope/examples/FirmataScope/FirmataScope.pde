@@ -31,6 +31,14 @@ void setup(){
     // random color, that will look nice and be visible
     scopes[i] = new Oscilloscope(this, posv, dim);
     scopes[i].setLine_color(color((int)random(255), (int)random(127)+127, 255));
+    
+    cp5.addButton("pause" + i)
+      .setLabel("pause")
+      .setValue(i)
+      .setPosition(dim[0]+10,posv[1] + 85)
+      .updateSize();
+     
+    scopes[i].setPause(false);
   }
   
   // multiplier comes from 1st scope
@@ -40,7 +48,7 @@ void setup(){
 
 void draw(){
   background(0);
-  text("arduinoscope", 20,20);
+  text("arduinoscope", 20, 20);
   
   int val;
   int[] dim;
@@ -66,7 +74,11 @@ void draw(){
 
 
 void controlEvent(ControlEvent theEvent) {
+  int val = int(theEvent.getValue());
+  
   if (theEvent.getName() == "com"){
-    arduino = new Arduino(this, Arduino.list()[int(theEvent.getValue())], 57600);
+    arduino = new Arduino(this, Arduino.list()[val], 57600);
+  }else{    
+    scopes[val].setPause(!scopes[val].isPause());
   }
 }
