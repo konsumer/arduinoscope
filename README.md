@@ -8,7 +8,7 @@ The basic idea with both front-ends is to connect your Arduino running Firmata, 
 
 ## Standalone
 
-If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the [downloads](https://github.com/konsumer/arduinoscope/downloads) section.
+If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the [downloads](https://github.com/konsumer/arduinoscope/tree/master/processing/downloads) section.
 
 
 ## Processing
