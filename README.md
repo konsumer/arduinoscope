@@ -20,6 +20,6 @@ If you want to modify the processing front-end, see [instructions](https://githu
 
 ## Node/web
 
-This is my new and fovorite GUI for the arduino.  You will need to install [node.js & npm](http://nodejs.org/download/) and follow the [instructions](https://github.com/konsumer/arduinoscope/tree/master/web) for that frontend.
+This is my new and favorite GUI for the arduino.  You will need to install [node.js & npm](http://nodejs.org/download/) and follow the [instructions](https://github.com/konsumer/arduinoscope/tree/master/web) for that frontend.
 
 If I can figure out a good way to make a stand-alone no install version of this, I will migrate the stand-alone apps to this front-end.
