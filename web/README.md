@@ -4,7 +4,7 @@ This is a web-based, node.js powered version of arduinoscope.
 
 You will need to install the Firmata firmware on your arduino (in arduino IDE: File -> Open -> Examples > Library-Firmata > StandardFirmata.) and [node.js/npm](http://nodejs.org/download/)
 
-After that, you can run in the web directory to install teh project dependencies:
+After that, you can run in the web directory to install the project dependencies:
 ```
 npm install
 ```
