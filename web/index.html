@@ -56,7 +56,7 @@
       socket.on('a', function(data){
         var now = (new Date()).getTime();
 
-        $('#time span').html((now-lastTime)/10);
+        $('#time span').html((now-lastTime));
 
         // first time, should have all pin-info
         if (!hasCanvas){
@@ -78,13 +78,13 @@
 
       function looper(){
         requestAnimFrame(looper);
-        lastTime = (new Date()).getTime();
-        socket.emit('a');
 
         $('canvas').each(function(){
           var canvas = this;
           var context = canvas.getContext("2d");
           var pin = $(this).data('pin');
+          lastTime = (new Date()).getTime();
+          socket.emit('a', {pin:pin});
 
           canvas.width = $('#scopes').width();
 

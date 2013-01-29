@@ -1,3 +1,5 @@
+// this will probably be replaced by node-webkit stuff, eventually...
+
 var app = require('http').createServer(handler),
   io = require('socket.io').listen(app),
   fs = require('fs'),
