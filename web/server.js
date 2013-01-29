@@ -1,48 +1,66 @@
-var serialport = require('serialport'),
-    firmata = require('firmata'),
-    app = require('express')(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server);
-
-var arduino;
-var serialports=[];
-
-app.use(require('express').static(__dirname+'/webroot'));
-server.listen(8080);
+var app = require('http').createServer(handler),
+  io = require('socket.io').listen(app),
+  fs = require('fs'),
+  pkg = require('./package.json'),
+  optimist  = require('optimist'),
+  firmata = require('firmata');
 
 
-io.sockets.on('connection', function (socket) {
-  // get a list of available serial ports
-  socket.on('list', function(data){
-    serialport.list(function (err, ports) {
-      if (!err){
-        serialports = ports;
-        data.ports=[];
-        ports.forEach(function(port){
-          data.ports.push(port.comName);
-        });
-      }else{
-        data.error = err;
-      }
-      socket.emit('list', data);
-    });
-  });
+var argv = optimist
+  .usage('Create a web-based Arduino Oscilliscope\nUsage: $0')
+  .default({
+    p:8080,
+    d:'/dev/cu.usbmodem1d11'
+  })
+  .describe('p', 'Port to listen on')
+  .describe('d', 'Device that arduino is on')
+  .alias('p', 'port')
+  .alias('d', 'device')
+  .argv;
 
-  // connect to a specific serial port
-  socket.on('arduino_connect', function (data) {
-    if (serialports && serialports[data.port]){
-      arduino = new firmata.Board(serialports[data.port].comName, function(){
-        socket.emit('arduino_connect', data);
-      });
-    }else{
-      data.error={msg: "port not found"};
-      socket.emit('arduino_connect', data);
+try{
+  app.listen(argv.port);
+  console.log('Listening on http://0.0.0.0:%d' , argv.port);
+}catch(e){
+  optimist.showHelp();
+}
+
+function handler (req, res) {
+  fs.readFile(__dirname + '/index.html',
+  function (err, data) {
+    if (err) {
+      res.writeHead(404);
+      return res.end('Error loading index.html');
     }
-
+    res.writeHead(200);
+    res.end(data);
   });
+}
 
-  // get a list of pins
-  socket.on('get_pins', function (data) {
-    console.dir(arduino);
+values = {};
+
+var board = new firmata.Board(argv.device,function(){
+  board.analogPins.forEach(function(pin){
+    board.pinMode(pin,board.MODES.ANALOG);
   });
+});
+
+io.set('log level', 1); // reduce logging
+
+io.sockets.on('connection', function(socket){
+  var sendPins = function(d){
+    if (d && d.pin){
+      socket.emit('a', board.pins[d.pin]);
+    }else{
+      out = [];
+      board.analogPins.forEach(function(pin){
+        out.push(board.pins[pin]);
+      });
+      socket.emit('a', out);
+    }
+  };
+  socket.on('a', sendPins);
+
+  // initially, send all analog pins
+  sendPins();
 });
