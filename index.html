@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Arduinoscope by konsumer</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Arduinoscope</h1>
+        <p>An oscilloscope, using arduino and processing/node</p>
+
+        <p class="view"><a href="https://github.com/konsumer/arduinoscope">View the Project on GitHub <small>konsumer/arduinoscope</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/konsumer/arduinoscope/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/konsumer/arduinoscope/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/konsumer/arduinoscope">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>Arduinoscope</h1>
+
+<p>This is the current version of my Arduino-powered, low-resolution, multi-channel oscilliscope. I made 2 frontends, that both speak <a href="http://firmata.org">firmata</a>, so you will need to install the Firmata firmware on your Arduino (in Arduino IDE: File -&gt; Open -&gt; Examples &gt; Library-Firmata &gt; StandardFirmata.)</p>
+
+<p>It used to run over a simple serial protocol, but I have decided to standardize on Firmata, so I can keep the pin-reading code in the client, and make installation more standardized.</p>
+
+<p>The basic idea with both front-ends is to connect your Arduino running Firmata, and start the front-end.</p>
+
+<h2>Standalone</h2>
+
+<p>If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the <a href="https://github.com/konsumer/arduinoscope/tree/master/processing/downloads">downloads</a> section.</p>
+
+<h2>Processing</h2>
+
+<p>This is a up-to-date port of my original oscilliscope. It is also the source for the stand-alone apps.</p>
+
+<p>If you want to modify the processing front-end, see <a href="https://github.com/konsumer/arduinoscope/tree/master/processing">instructions</a>.</p>
+
+<h2>Node/web</h2>
+
+<p>This is my new and favorite GUI for the arduino.  You will need to install <a href="http://nodejs.org/download/">node.js &amp; npm</a> and follow the <a href="https://github.com/konsumer/arduinoscope/tree/master/web">instructions</a> for that frontend.</p>
+
+<p>If I can figure out a good way to make a stand-alone no install version of this, I will migrate the stand-alone apps to this front-end.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/konsumer">konsumer</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
