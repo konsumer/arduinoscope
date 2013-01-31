@@ -11,6 +11,7 @@ float multiplier;
 void setup(){
   size(800, 800);
   ControlP5 cp5 = new ControlP5(this);
+  frame.setTitle("Arduinoscope");
   
   // COM dropdown
   DropdownList com = cp5.addDropdownList("com")
