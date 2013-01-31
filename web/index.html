@@ -107,6 +107,7 @@
           });
           context.stroke();
           var v = values[pin].pop();
+
           $('#val' + pin).html((v/1024) * 5 + "V");
           values[pin].push(v);
         });

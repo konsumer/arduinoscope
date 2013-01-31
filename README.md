@@ -8,18 +8,23 @@ The basic idea with both front-ends is to connect your Arduino running Firmata, 
 
 ## Standalone
 
-If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the [downloads](https://github.com/konsumer/arduinoscope/tree/master/processing/downloads) section.
+If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform:
+
+*  [Linux 32-bit](http://konsumer.github.com/arduinoscope/downloads/application.linux32.zip)
+*  [Linux 64-bit](hhttp://konsumer.github.com/arduinoscope/downloads/application.linux64.zip)
+*  [Mac Universal](hhttp://konsumer.github.com/arduinoscope/downloads/application.macosx.zip)
+*  [Windows 32-bit](hhttp://konsumer.github.com/arduinoscope/downloads/application.windows32.zip)
 
 
 ## Processing
 
-This is a up-to-date port of my original oscilliscope. It is also the source for the stand-alone apps.
+This is a up-to-date port of my original oscilliscope. It is also the current source for the stand-alone apps.
 
 If you want to modify the processing front-end, see [instructions](https://github.com/konsumer/arduinoscope/tree/master/processing).
 
 
-## Node/web
+## Node
 
 This is my new and favorite GUI for the arduino.  You will need to install [node.js & npm](http://nodejs.org/download/) and follow the [instructions](https://github.com/konsumer/arduinoscope/tree/master/web) for that frontend.
 
-If I can figure out a good way to make a stand-alone no install version of this, I will migrate the stand-alone apps to this front-end.
+It is currently using socket.io, but eventually I will be using node-webkit for this.
