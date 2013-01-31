@@ -1,33 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Arduinoscope by konsumer</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Arduinoscope : An oscilloscope, using arduino and processing/node" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Arduinoscope</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Arduinoscope</h1>
-        <p>An oscilloscope, using arduino and processing/node</p>
 
-        <p class="view"><a href="https://github.com/konsumer/arduinoscope">View the Project on GitHub <small>konsumer/arduinoscope</small></a></p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/konsumer/arduinoscope">View on GitHub</a>
 
+          <h1 id="project_title">Arduinoscope</h1>
+          <h2 id="project_tagline">An oscilloscope, using arduino and processing/node</h2>
 
-        <ul>
-          <li><a href="https://github.com/konsumer/arduinoscope/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/konsumer/arduinoscope/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/konsumer/arduinoscope">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/konsumer/arduinoscope/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/konsumer/arduinoscope/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Arduinoscope</h1>
 
 <p>This is the current version of my Arduino-powered, low-resolution, multi-channel oscilliscope. I made 2 frontends, that both speak <a href="http://firmata.org">firmata</a>, so you will need to install the Firmata firmware on your Arduino (in Arduino IDE: File -&gt; Open -&gt; Examples &gt; Library-Firmata &gt; StandardFirmata.)</p>
@@ -38,26 +41,40 @@
 
 <h2>Standalone</h2>
 
-<p>If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform from the <a href="https://github.com/konsumer/arduinoscope/tree/master/processing/downloads">downloads</a> section.</p>
+<p>If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform:</p>
 
-<h2>Processing</h2>
+<ul>
+<li> <a href="http://konsumer.github.com/arduinoscope/downloads/application.linux32.zip">Linux 32-bit</a>
+</li>
+<li> <a href="http://konsumer.github.com/arduinoscope/downloads/application.linux64.zip">Linux 64-bit</a>
+</li>
+<li> <a href="http://konsumer.github.com/arduinoscope/downloads/application.macosx.zip">Mac Universal</a>
+</li>
+<li> <a href="http://konsumer.github.com/arduinoscope/downloads/application.windows32.zip">Windows 32-bit</a>
+</li>
+</ul><h2>Processing</h2>
 
-<p>This is a up-to-date port of my original oscilliscope. It is also the source for the stand-alone apps.</p>
+<p>This is a up-to-date port of my original oscilliscope. It is also the current source for the stand-alone apps.</p>
 
 <p>If you want to modify the processing front-end, see <a href="https://github.com/konsumer/arduinoscope/tree/master/processing">instructions</a>.</p>
 
-<h2>Node/web</h2>
+<h2>Node</h2>
 
 <p>This is my new and favorite GUI for the arduino.  You will need to install <a href="http://nodejs.org/download/">node.js &amp; npm</a> and follow the <a href="https://github.com/konsumer/arduinoscope/tree/master/web">instructions</a> for that frontend.</p>
 
-<p>If I can figure out a good way to make a stand-alone no install version of this, I will migrate the stand-alone apps to this front-end.</p>
+<p>It is currently using socket.io, but eventually I will be using node-webkit for this.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/konsumer">konsumer</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Arduinoscope maintained by <a href="https://github.com/konsumer">konsumer</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
