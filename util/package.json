@@ -1,0 +1,10 @@
+{
+	"name": "arduinoscope_utils",
+	"version":"0.0.0",
+	"private":true,
+	"dependencies":{
+		"optimist":"",
+		"firmata":"",
+		"serialport":""
+	}
+}

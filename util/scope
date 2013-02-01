@@ -1,0 +1,60 @@
+#!/usr/bin/env node
+
+/*
+
+scope - a javascript CLI oscope for collecting data from an arduino running Firmata.
+
+*/
+
+var arduino = require('../arduinoscope.nw/arduino.js'),
+    fs = require('fs'),
+    optimist = require('optimist');
+
+// command-line options
+var argv = optimist
+    .usage('Oscope for collecting data from an arduino running Firmata\nUsage: $0 -p [PORT] -o [FILE]')
+    .alias('p','port')
+    .alias('o','out')
+    .default('o','scope.csv')
+    .describe('p', 'The COM port where your Arduino is hooked')
+    .describe('o', 'The file out.')
+    .check(function(argv){
+        if (!argv.port){
+            arduino.list(function(err, ports){
+                optimist.showHelp();
+                console.log('COM port is required.  Try one of these:\n  ' + ports.join('\n  ') + '\n');
+            });
+        }
+    })
+    .argv;
+
+// double-check here, becuse things are out of whack with async.
+if (!argv.port) return;
+
+arduino.board(argv.port, function(err, board){
+    if (err) throw(err);
+    
+    // set pin mode
+    board.analogPins.forEach(function(pin){
+      board.pinMode(pin, board.MODES.ANALOG);
+      console.log('setting pin %d to ANALOG-IN', pin);
+    });
+
+    console.log("Logging pins. Press Ctrl-C to stop.");
+
+    var line = 'time';
+    board.analogPins.forEach(function(pin){
+        line += '\tpin ' + pin;
+    });
+
+    fs.writeFileSync(argv.out, line + '\n');
+
+    while(true){
+        line = (new Date).getTime();
+        board.analogPins.forEach(function(pin){
+            line += '\t' + board.pins[pin].value;
+        });
+        fs.appendFileSync(argv.out, line + '\n');
+    }
+});
+
