@@ -12,13 +12,17 @@ I made a [Mac binary](http://konsumer.github.com/arduinoscope/downloads/arduinos
 
 ## Building
 
-For now, you will need to build it yourself, to get it running.
+For now, you will need to build it yourself, if you are not on Mac, to get it running.
+
+I get an instant crash on Windows 7 (probably due to something with native serialport) that is hard to troubleshoot, so if people want to test, that'd be awesome.
 
 ### Windows/Linux
 
 You will need the [node-webkit](https://github.com/rogerwang/node-webkit) runtime for your platform, and the compiled version of serialport module. So, just download this project, and in the `arduinoscope.nw` directory, type `npm install`.
 
 You will need to be able to compile node modules (so have `npm`, and `node-gyp` in your path.)
+
+You will need C-compiling toolkit (Visual C++ Studio 2010, or build-essentials.)
 
 ### Mac
 
@@ -30,7 +34,7 @@ On Mac, [node-webkit](https://github.com/rogerwang/node-webkit) is 32bit, only, 
     sed -i bak s/x86_64/i386/g build/serialport.target.mk
     nw-gyp build
 
-You will need to get a copy of `nw-gyp`, and put it in your path.
+You will need to get a copy of `nw-gyp`, and put it in your path (`npm -g install nw-gyp`).
 
 ## Running
 
