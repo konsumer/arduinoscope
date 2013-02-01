@@ -2,19 +2,18 @@
 
 This is the [node-webkit](https://github.com/rogerwang/node-webkit) version of Arduinoscope.
 
-It's pretty basic, and just a proof-of-concept, for now.
+It's pretty basic, and just a proof-of-concept, for now. It doesn't make actual scopes, just text-inputs with current analog value.
 
 ## Binaries
 
-Eventually, the main Arduinoscope project will use this as the GUI, and binaries will be available for the 3 supported platforms.
+*  [Mac 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-mac32.nw)
+*  [Windows 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-windows32.nw) - untested, as I just have a virtualmachine without serial. It does run, though. Send me some bug reports!
+*  [Linux 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-linux32.nw) - same deal as above
+*  [Linux 64bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-linux64.nw) - same deal as above
 
-I made a [Mac binary](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-mac.nw), because it's a slightly bigger pain to build it there.
+To run them, go get the [node-webkit runtime](https://github.com/rogerwang/node-webkit) for your operating system.
 
 ## Building
-
-For now, you will need to build it yourself, if you are not on Mac, to get it running.
-
-I get an instant crash on Windows 7 (probably due to something with native serialport) that is hard to troubleshoot, so if people want to test, that'd be awesome.
 
 ### Windows/Linux
 
