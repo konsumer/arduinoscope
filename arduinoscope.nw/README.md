@@ -8,7 +8,7 @@ It's pretty basic, and just a proof-of-concept, for now.
 
 Eventually, the main Arduinoscope project will use this as the GUI, and binaries will be available for the 3 supported platforms.
 
-I made a [Mac binary](http://konsumer.github.com/arduinoscope/downloads/ArduinoScope.zip), because it's a slightly bigger pain to build it there.
+I made a [Mac binary](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-mac.nw), because it's a slightly bigger pain to build it there.
 
 ## Building
 
