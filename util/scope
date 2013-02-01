@@ -42,19 +42,23 @@ arduino.board(argv.port, function(err, board){
 
     console.log("Logging pins. Press Ctrl-C to stop.");
 
+    // make header row to wipe out file
     var line = 'time';
     board.analogPins.forEach(function(pin){
         line += '\tpin ' + pin;
     });
-
     fs.writeFileSync(argv.out, line + '\n');
 
-    while(true){
-        line = (new Date).getTime();
+    // recursive function that grabs values and appends to file
+    function writeVals(){
+        var line = (new Date).getTime();
         board.analogPins.forEach(function(pin){
             line += '\t' + board.pins[pin].value;
         });
-        fs.appendFileSync(argv.out, line + '\n');
+        fs.appendFile(argv.out, line + '\n', 'utf8', function(err){
+            writeVals();
+        });
     }
+    writeVals();
 });
 
