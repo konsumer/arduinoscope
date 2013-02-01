@@ -15,13 +15,16 @@ To run them, go get the [node-webkit runtime](https://github.com/rogerwang/node-
 
 ## Building
 
+*  You will need to get a copy of `nw-gyp`, and put it in your path (`npm -g install nw-gyp`).
+*  You will need C-compiling toolkit (Xcode, Visual C++ Studio 2010, or build-essentials.)
+*  You will need to be able to compile node modules (so have `npm`, and `node-gyp` in your path.)
+
 ### Windows/Linux
 
-You will need the [node-webkit](https://github.com/rogerwang/node-webkit) runtime for your platform, and the compiled version of serialport module. So, just download this project, and in the `arduinoscope.nw` directory, type `npm install`.
-
-You will need to be able to compile node modules (so have `npm`, and `node-gyp` in your path.)
-
-You will need C-compiling toolkit (Visual C++ Studio 2010, or build-essentials.)
+    npm install
+    cd node_modules/serialport
+    nw-gyp configure --target=0.4.1
+    nw-gyp build
 
 ### Mac
 
@@ -29,11 +32,9 @@ On Mac, [node-webkit](https://github.com/rogerwang/node-webkit) is 32bit, only, 
 
     npm install
     cd node_modules/serialport
-    nw-gyp configure --target=0.4.0
+    nw-gyp configure --target=0.4.1
     sed -i bak s/x86_64/i386/g build/serialport.target.mk
     nw-gyp build
-
-You will need to get a copy of `nw-gyp`, and put it in your path (`npm -g install nw-gyp`).
 
 ## Running
 
