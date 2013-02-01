@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>arduinoscope</title>
+    <!-- this is a quick prototype of ideas. -->
+    <!-- don't mind bloat, these can all be trimmed-down considerably, once required components are sorted out. -->
+    <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" rel="stylesheet">
+    <style>
+      .navbar select {
+        margin-top: 7px;
+      }
+    </style>
+</head>
+  <body>
+    <div id="topbar" class="navbar navbar-static-top navbar-inverse">
+      <div class="navbar-inner">
+        <a class="brand">arduinoscope</a>
+        <select id="com" class="pull-right">
+          <option value="">COM port</option>
+        </select>
+      </div>
+    </div>
+    <div class="container">
+        <div class="scopes"></div>
+    </div>
+  </body>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+  <script>
+    var arduino = require('./arduino.js');
+
+    // main loop, once things are setup
+    function oscLoop(board){
+      board.analogPins.forEach(function(pin){
+        // analogRead callback not firing, so doing it manually
+        $('#scope' + pin ).attr('value', board.pins[pin].value);
+      });
+    }
+
+    // setup COM port, handle com selection, and enter loop
+    arduino.list(function(err, ports){
+      if (err) throw(err);
+
+      ports.forEach(function(port){
+        $('#com').append('<option>' + port + '</option>');
+      });
+
+      $('#com').change(function(){
+        $('.scopes').html();
+
+        var com = $(this).val();
+        if (com !== ''){
+          // open COM port
+          arduino.board(com, function(err, board){
+            if (err) throw(err);
+
+            console.log(com + ' opened');
+
+            // set pin mode
+            board.analogPins.forEach(function(pin){
+              board.pinMode(pin, board.MODES.ANALOG);
+              $('.scopes').append('<label for="scope' + pin + '">pin ' + pin + '</label> <input id="scope' + pin + '" /><br/>');
+            });
+
+            // enter loop
+            function loop(){
+              oscLoop(board);
+              window.requestAnimationFrame(loop);
+            }
+            window.requestAnimationFrame(loop);
+          });
+        }
+      });
+    });
+  </script>
+</html>

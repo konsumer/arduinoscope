@@ -1,0 +1,19 @@
+{
+  "name": "arduinoscope",
+  "private": true,
+  "version": "0.0.1",
+  "description": "node-webkit oscilloscope",
+  "keywords": [ "arduino", "oscilloscope" ],
+  "window": {
+    "icon": "icon.png",
+    "toolbar": false
+  },
+  "webkit": {
+    "plugin": false
+  },
+  "main": "index.html",
+  "dependencies": {
+    "firmata": "",
+    "serialport": ""
+  }
+}
