@@ -17,7 +17,7 @@ To run them, go get the [node-webkit runtime](https://github.com/rogerwang/node-
 
 *  You will need to get a copy of `nw-gyp`, and put it in your path (`npm -g install nw-gyp`).
 *  You will need C-compiling toolkit (Xcode, Visual C++ Studio 2010, or build-essentials.)
-*  You will need to be able to compile node modules (so have `npm`, and `node-gyp` in your path.)
+*  You will need to be able to compile and install  native node modules (so have `npm`, and `node-gyp` in your path.)
 
 ### Windows/Linux
 
