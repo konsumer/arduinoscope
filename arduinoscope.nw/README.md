@@ -6,7 +6,7 @@ It's pretty basic, and just a proof-of-concept, for now.
 
 ## Binaries
 
-Eventually, the main arduinoscope project will use this as the GUI, and binaries will be available for the 3 supported platforms.
+Eventually, the main Arduinoscope project will use this as the GUI, and binaries will be available for the 3 supported platforms.
 
 ## Building
 
@@ -14,7 +14,7 @@ For now, you will need to build it yourself, to get it running.
 
 ### Windows/Linux
 
-You will need the [node-webkit](https://github.com/rogerwang/node-webkit) runtime for your platform, and the compiled version of serialport module. For everyonebut Macs, just download this project, and in the `arduinoscope.nw` directory, type `npm install`.
+You will need the [node-webkit](https://github.com/rogerwang/node-webkit) runtime for your platform, and the compiled version of serialport module. So, just download this project, and in the `arduinoscope.nw` directory, type `npm install`.
 
 You will need to be able to compile node modules (so have `npm`, and `node-gyp` in your path.)
 
