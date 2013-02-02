@@ -8,7 +8,7 @@ It's pretty basic, and just a proof-of-concept, for now. It doesn't make actual 
 
 *  [Mac 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-mac32.nw)
 *  [Windows 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-windows32.nw) - untested, as I just have a virtualmachine without serial. It does run, though. Send me some bug reports!
-*  [Linux 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-linux32.nw) - same deal as above
+*  [Linux 32bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-linux32.nw) - same deal as above, but I didn't even install X, so totally untested.
 *  [Linux 64bit](http://konsumer.github.com/arduinoscope/downloads/arduinoscope-linux64.nw) - same deal as above
 
 ## Building
