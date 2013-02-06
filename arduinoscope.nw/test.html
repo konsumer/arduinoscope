@@ -51,7 +51,9 @@
     board.analogPins.forEach(function(pin, i){
       $c = $('<div class="scope"><span class="label">analog ' + pin + '</span><canvas width="' + ($('.container').width()-20) + '" height="300" id="scope'+pin+'"></canvas>scaleX:<input data-osc="' + i + '" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"> scaleY:<input data-osc="' + i + '" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5"></div>');
       $('.scopes').append($c);
-      scopes.push(new Oscilloscope(pin, $c.find('canvas').get(0)));
+      var osc = new Oscilloscope(pin, $c.find('canvas').get(0));
+      osc.color = 'rgba(0,100,' + Math.floor((Math.random()*255)) + ', 0.8)';
+      scopes.push(osc);
     });
 
     $('.scaleX').change(function(){
