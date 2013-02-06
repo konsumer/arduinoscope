@@ -2,11 +2,13 @@
  * Javascript Oscilloscope class, using canvas
  */
 
-var Oscilloscope = function(pin, canvas){
+var Oscilloscope = function(pin, canvas, color, lineColor){
+	this.color = color || 'rgba(255,0,0,0.5)';
+	this.lineColor = lineColor || '#000';
+
 	// public
 	this.pin = pin;
 	this.canvas = canvas;
-	this.framesize = canvas.width;
 
 	// private
 	var values = [];
@@ -23,23 +25,25 @@ var Oscilloscope = function(pin, canvas){
     	ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	    
 		// cross-hairs
-	    ctx.strokeStyle = 'rgba(0,0,0,0.8)';
+	    ctx.strokeStyle = this.lineColor;
 	    ctx.beginPath();
 	    ctx.moveTo(canvas.width/2, 0);
 	    ctx.lineTo(canvas.width/2, canvas.height);
 	    ctx.moveTo(0, canvas.height/2);
 	    ctx.lineTo(canvas.width, canvas.height/2);
 	    ctx.stroke();
+	    ctx.closePath();
 
 	    // values
-	    ctx.strokeStyle = 'rgba(255,0,0,0.8)';
+	    ctx.beginPath();
+	    ctx.strokeStyle = this.color;
 	    ctx.moveTo(0, 0);
 	    this.values.forEach(function(val, x){
-	    	ctx.lineTo(x, (val/1024) * canvas.height);
+	    	ctx.lineTo(x, val * canvas.height);
 	    });
-		
+		ctx.stroke();
 		ctx.closePath();
-	    ctx.stroke();
+	    
     }
 
 	// getter/setters to do magic
@@ -63,8 +67,8 @@ var Oscilloscope = function(pin, canvas){
      * Trim values to this.framesize
      */
 	this.__defineGetter__("values", function(){
-		if (values.length >= this.framesize){
-        	return values.slice(values.length-this.framesize, this.framesize);
+		if (values.length >= this.canvas.width){
+        	return values.slice(values.length-this.canvas.width, this.canvas.width);
     	}else{
     		return values.slice(0);
     	}
@@ -74,7 +78,7 @@ var Oscilloscope = function(pin, canvas){
      * Interface for setting all values at once
      */
     this.__defineSetter__("values", function(val){
-        values = val.slice(this.framesize);
+        values = val.slice(this.canvas.width);
         this.update();
     });
 

@@ -56,7 +56,7 @@
 
     var update = function(){
       scopes.forEach(function(scope){
-          scope.value = Math.floor(Math.random()*1024);
+          scope.value = Math.random();
       });
       window.requestAnimationFrame(update);
     };
