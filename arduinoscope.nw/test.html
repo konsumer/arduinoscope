@@ -42,20 +42,31 @@
   </body>
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script src="requestAnimationFrame.js"></script>
   <script src="oscilloscope.js"></script>
   <script>
-  (function(){
+  $(function(){
+
     // fixture
     var board = {
       analogPins: [14,15,16,17,18,19]
     };
 
+    var templates ={};
+    $('script[type=underscore]').each(function(){
+      templates[this.id] = _.template($(this).html());
+    });
+
     var scopes = [];
     board.analogPins.forEach(function(pin, i){
-      $c = $('<div class="scope" id="scope'+i+'"><span class="label">analog ' + pin + '</span><canvas width="' + ($('.container').width()-20) + '" height="300"></canvas>val:<span class="val"></span>min:<span class="min"></span> max:<span class="max"></span> <button class="clear" data-osc="' + i + '">clear</button></div><br/>scaleX:<input data-osc="' + i + '" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"> scaleY:<input data-osc="' + i + '" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5">');
-      $('.scopes').append($c);
-      var osc = new Oscilloscope(pin, $c.find('canvas').get(0));
+      var c = templates.scope({
+        pin: pin,
+        i: i,
+        width: $('.container').width()-20
+      });
+      $('.scopes').append(c);
+      var osc = new Oscilloscope(pin, $('#scope'+i+' canvas').get(0));
       osc.color = 'rgba(0,100,' + Math.floor((Math.random()*255)) + ', 0.8)';
       scopes.push(osc);
     });
@@ -82,7 +93,19 @@
       window.requestAnimationFrame(update);
     };
     window.requestAnimationFrame(update);
-  })();
+  });
 
+  </script>
+  <script id="scope" type="underscore">
+  <div class="scope" id="scope<%=i%>">
+    <span class="label">analog <%=pin%></span>
+    <canvas width="<%=width%>" height="300"></canvas>
+    val:<span class="val"></span>
+    min:<span class="min"></span>
+    max:<span class="max"></span>
+    <button class="clear" data-osc="<%=i%>">clear</button><br/>
+    scaleX:<input data-osc="<%=i%>" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5">
+    scaleY:<input data-osc="<%=i%>" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5">
+  </div>
   </script>
 </html>
