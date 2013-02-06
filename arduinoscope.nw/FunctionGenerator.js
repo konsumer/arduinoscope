@@ -30,16 +30,10 @@ var FunctionGenerator=function(position){
         });
     };
 
-    // would like to get this in other format...
     this.tri = function(){
-        var out = [], i;
-        for (i=0; i<64; i++){
-            out.push(i/64);
-        }
-        for (i=64; i>0; i--){
-            out.push(i/64);
-        }
-        return out;
+        return this.func(function(x){
+            return (x<64) ? x/64 : ((64-x)/64) + 1;
+        });
     };
 
 
