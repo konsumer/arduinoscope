@@ -8,11 +8,7 @@
     <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" rel="stylesheet">
-    <style>
-      .navbar select {
-        margin-top: 7px;
-      }
-    </style>
+    <link href="arduinoscope.css" rel="stylesheet">
 </head>
   <body>
     <div id="topbar" class="navbar navbar-static-top navbar-inverse">
@@ -27,27 +23,45 @@
         <div class="scopes"></div>
     </div>
   </body>
+
+  <script id="scope" type="underscore">
+    <div class="scope" id="scope<%=i%>">
+      <span class="label">analog <%=i%></span>
+      <canvas width="<%=width%>" height="300"></canvas>
+      val:<span class="val"></span>
+      min:<span class="min"></span>
+      max:<span class="max"></span>
+      <button class="clear" data-osc="<%=i%>">clear</button><br/>
+      <label for="scaleX<%=i%>">scaleX:<input id="scaleX<%=i%>" data-osc="<%=i%>" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"></label>
+      <label for="scaleY<%=i%>">scaleY:<input id="scaleY<%=i%>" data-osc="<%=i%>" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5"></label>
+    </div>
+  </script>
+
+
+  <script id="ports" type="underscore">
+    <% ports.forEach(function(port){ %>
+      <option><%=port%></option>
+    <% } %>
+  </script>
+
+
   <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
-  <script src="oscilloscope.js"></script>
+  <script src="requestAnimationFrame.js"></script>
+  <script src="Oscilloscope.js"></script>
   <script>
     var arduino = require('./arduino.js');
 
-    // main loop, once things are setup
-    function oscLoop(board){
-      board.analogPins.forEach(function(pin){
-        // analogRead callback not firing, so doing it manually
-        $('#scope' + pin ).attr('value', board.pins[pin].value);
-      });
-    }
+    // cache all templates
+    var templates = {};
+    $('script[type=underscore]').each(function(){ templates[this.id] = _.template($(this).html()); });
 
     // setup COM port, handle com selection, and enter loop
     arduino.list(function(err, ports){
       if (err) throw(err);
 
-      ports.forEach(function(port){
-        $('#com').append('<option>' + port + '</option>');
-      });
+      $('#com').html(templates['ports']({ports:ports}));
 
       $('#com').change(function(){
         $('.scopes').html();
@@ -60,18 +74,45 @@
 
             console.log(com + ' opened');
 
-            // set pin mode
-            board.analogPins.forEach(function(pin){
-              board.pinMode(pin, board.MODES.ANALOG);
-              $('.scopes').append('<label for="scope' + pin + '">pin ' + pin + '</label> <input id="scope' + pin + '" /><br/>');
+            var scopes = [];
+            board.analogPins.forEach(function(pin, i){
+              var c = templates.scope({
+                pin: pin,
+                i: i,
+                width: $('.container').width()-20
+              });
+              $('.scopes').append(c);
+              var osc = new Oscilloscope(pin, $('#scope'+i+' canvas').get(0));
+              osc.color = 'rgba(0,100,' + Math.floor((Math.random()*255)) + ', 0.8)';
+              scopes.push(osc);
             });
 
-            // enter loop
-            function loop(){
-              oscLoop(board);
-              window.requestAnimationFrame(loop);
-            }
-            window.requestAnimationFrame(loop);
+            $('input.scaleX').change(function(){
+              scopes[$(this).data('osc')].scaleX = $(this).val();
+            });
+
+            $('input.scaleY').change(function(){
+              scopes[$(this).data('osc')].scaleY = $(this).val();
+            });
+
+            $('button.clear').click(function(){
+              scopes[$(this).data('osc')].values=[];
+            });
+
+            var update = function(){
+              board.analogPins.forEach(function(pin){
+                scope.value = board.pins[pin].value;
+              });
+              scopes.forEach(function(scope, i){
+                  scope.update();
+                  $('.val', $('#scope' +i)).html(scope.value * volts);
+                  $('.min', $('#scope' +i)).html(scope.min * volts);
+                  $('.max', $('#scope' +i)).html(scope.max * volts);
+              });
+              window.requestAnimationFrame(update);
+            };
+            update();
+
           });
         }
       });
