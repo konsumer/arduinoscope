@@ -36,9 +36,6 @@ var FunctionGenerator=function(position){
         });
     };
 
-
-    // STILL NEEDS WORK...
-
     this.sin = function(){
         return this.func(function(x){
             return Math.sin( x * (Math.PI * 2 / 127) ) / 2 + 0.5;
