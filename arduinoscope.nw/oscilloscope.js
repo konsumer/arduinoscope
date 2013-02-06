@@ -57,14 +57,14 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
      * get min value
      */
 	this.__defineGetter__("min", function(){
-        return this.values.sort().pop();
+        return this.values.sort().shift();
     });
 
     /**
      * get max value
      */
 	this.__defineGetter__("max", function(){
-        return this.values.sort().unshift();
+        return this.values.sort().pop();
     });
 
     /**
