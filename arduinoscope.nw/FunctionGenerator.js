@@ -32,13 +32,19 @@ var FunctionGenerator=function(position){
 
     this.tri = function(){
         return this.func(function(x){
-            return (x<64) ? x/64 : ((64-x)/64) + 1;
+            return (x<64) ? x/64 : ((64-x)/63) + 1;
         });
     };
 
     this.sin = function(){
         return this.func(function(x){
             return Math.sin( x * (Math.PI * 2 / 127) ) / 2 + 0.5;
+        });
+    };
+
+    this.cos = function(){
+        return this.func(function(x){
+            return Math.cos( x * (Math.PI * 2 / 127) ) / 2 + 0.5;
         });
     };
 
