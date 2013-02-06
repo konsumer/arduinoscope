@@ -41,7 +41,7 @@ var FunctionGenerator=function(position){
 
     this.sin = function(){
         return this.func(function(x){
-            return (Math.sin(x*2*Math.PI/180)+1)/2;
+            return Math.sin( x * (Math.PI * 2 / 127) ) / 2 + 0.5;
         });
     };
 

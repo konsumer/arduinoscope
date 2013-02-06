@@ -40,6 +40,7 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
         ctx.stroke();
         ctx.closePath();
 
+        // TODO: center on line, invert Y so 1 is at top.
         // values
         ctx.beginPath();
         ctx.strokeStyle = scope.color;
@@ -107,8 +108,5 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
     this.__defineSetter__("values", function(val){
         values = val.slice(this.canvas.width);
     });
-
-    // update on init
-    this.update();
 
 };
