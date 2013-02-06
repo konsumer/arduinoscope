@@ -47,7 +47,4 @@ var FunctionGenerator=function(position){
             return Math.cos( x * (Math.PI * 2 / 127) ) / 2 + 0.5;
         });
     };
-
-
-
 };

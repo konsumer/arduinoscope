@@ -57,7 +57,7 @@
     };
 
     // cache all templates
-    var templates ={};
+    var templates = {};
     $('script[type=underscore]').each(function(){ templates[this.id] = _.template($(this).html()); });
 
     var scopes = [];

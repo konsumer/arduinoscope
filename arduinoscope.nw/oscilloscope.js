@@ -41,12 +41,14 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
         ctx.closePath();
 
         // TODO: center on line, invert Y so 1 is at top.
+        // TODO: fit < canvas.width to canvas.width, then show last data
+        // TODO: allow scroll
         // values
         ctx.beginPath();
         ctx.strokeStyle = scope.color;
         ctx.moveTo(0, canvas.height/2);
         scope.values.forEach(function(val, x){
-            ctx.lineTo(x * scope.scaleX, val * scope.scaleY * canvas.height);
+            ctx.lineTo(x * scope.scaleX, val * canvas.height/scope.scaleY);
         });
         ctx.stroke();
         ctx.closePath();
