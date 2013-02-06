@@ -26,7 +26,7 @@
     }
     .val, .min, .max {
       display:inline-block;
-      width: 200px;
+      width: 180px;
     }
     </style>
    </head>
@@ -44,7 +44,8 @@
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
   <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
   <script src="requestAnimationFrame.js"></script>
-  <script src="oscilloscope.js"></script>
+  <script src="Oscilloscope.js"></script>
+  <script src="FunctionGenerator.js"></script>
   <script>
   $(function(){
 
@@ -55,10 +56,9 @@
       analogPins: [14,15,16,17,18,19]
     };
 
+    // cache all templates
     var templates ={};
-    $('script[type=underscore]').each(function(){
-      templates[this.id] = _.template($(this).html());
-    });
+    $('script[type=underscore]').each(function(){ templates[this.id] = _.template($(this).html()); });
 
     var scopes = [];
     board.analogPins.forEach(function(pin, i){
@@ -87,27 +87,38 @@
 
     var update = function(){
       scopes.forEach(function(scope, i){
-          scope.value = Math.random();
-          $('.val', $('#scope' +i)).html(scope.value*volts);
-          $('.min', $('#scope' +i)).html(scope.min*volts);
-          $('.max', $('#scope' +i)).html(scope.max*volts);
+          scope.update();
+          $('.val', $('#scope' +i)).html(scope.value * volts);
+          $('.min', $('#scope' +i)).html(scope.min * volts);
+          $('.max', $('#scope' +i)).html(scope.max * volts);
       });
       window.requestAnimationFrame(update);
     };
-    window.requestAnimationFrame(update);
+    update();
+
+    var fn = new FunctionGenerator();
+
+    setInterval(function(){
+      scopes[0].value = fn.noi();
+      scopes[1].value = fn.sqr();
+      scopes[2].value = fn.saw();
+      scopes[3].value = fn.tri();
+      scopes[4].value = fn.sin();
+    }, 10);
+
   });
 
   </script>
   <script id="scope" type="underscore">
   <div class="scope" id="scope<%=i%>">
-    <span class="label">analog <%=pin%></span>
+    <span class="label">analog <%=i%></span>
     <canvas width="<%=width%>" height="300"></canvas>
     val:<span class="val"></span>
     min:<span class="min"></span>
     max:<span class="max"></span>
     <button class="clear" data-osc="<%=i%>">clear</button><br/>
-    scaleX:<input data-osc="<%=i%>" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5">
-    scaleY:<input data-osc="<%=i%>" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5">
+    <label for="scaleX<%=i%>">scaleX:<input id="scaleX<%=i%>" data-osc="<%=i%>" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"></label>
+    <label for="scaleY<%=i%>">scaleY:<input id="scaleY<%=i%>" data-osc="<%=i%>" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5"></label>
   </div>
   </script>
 </html>
