@@ -1,0 +1,25 @@
+.navbar select {
+  margin-top: 7px;
+}
+canvas{
+  border: 1px solid #000;
+  margin: 10px;
+}
+.scope {
+  width: 100%;
+}
+.scope .label {
+  display:block;
+}
+
+#topbar {
+  margin-bottom: 10px;
+}
+
+body {
+  background: #eee;
+}
+.val, .min, .max {
+  display:inline-block;
+  width: 180px;
+}

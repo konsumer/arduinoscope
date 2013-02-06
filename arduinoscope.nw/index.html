@@ -14,9 +14,7 @@
     <div id="topbar" class="navbar navbar-static-top navbar-inverse">
       <div class="navbar-inner">
         <a class="brand">arduinoscope</a>
-        <select id="com" class="pull-right">
-          <option value="">COM port</option>
-        </select>
+        <select id="com" class="pull-right"></select>
       </div>
     </div>
     <div class="container">
@@ -37,10 +35,10 @@
     </div>
   </script>
 
-
   <script id="ports" type="underscore">
-    <% ports.forEach(function(port){ %>
-      <option><%=port%></option>
+    <option value="">COM port</option>
+    <% for (i in ports){ %>
+      <option><%= ports[i] %></option>
     <% } %>
   </script>
 
@@ -50,72 +48,6 @@
   <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
   <script src="requestAnimationFrame.js"></script>
   <script src="Oscilloscope.js"></script>
-  <script>
-    var arduino = require('./arduino.js');
-
-    // cache all templates
-    var templates = {};
-    $('script[type=underscore]').each(function(){ templates[this.id] = _.template($(this).html()); });
-
-    // setup COM port, handle com selection, and enter loop
-    arduino.list(function(err, ports){
-      if (err) throw(err);
-
-      $('#com').html(templates['ports']({ports:ports}));
-
-      $('#com').change(function(){
-        $('.scopes').html();
-
-        var com = $(this).val();
-        if (com !== ''){
-          // open COM port
-          arduino.board(com, function(err, board){
-            if (err) throw(err);
-
-            console.log(com + ' opened');
-
-            var scopes = [];
-            board.analogPins.forEach(function(pin, i){
-              var c = templates.scope({
-                pin: pin,
-                i: i,
-                width: $('.container').width()-20
-              });
-              $('.scopes').append(c);
-              var osc = new Oscilloscope(pin, $('#scope'+i+' canvas').get(0));
-              osc.color = 'rgba(0,100,' + Math.floor((Math.random()*255)) + ', 0.8)';
-              scopes.push(osc);
-            });
-
-            $('input.scaleX').change(function(){
-              scopes[$(this).data('osc')].scaleX = $(this).val();
-            });
-
-            $('input.scaleY').change(function(){
-              scopes[$(this).data('osc')].scaleY = $(this).val();
-            });
-
-            $('button.clear').click(function(){
-              scopes[$(this).data('osc')].values=[];
-            });
-
-            var update = function(){
-              board.analogPins.forEach(function(pin){
-                scope.value = board.pins[pin].value;
-              });
-              scopes.forEach(function(scope, i){
-                  scope.update();
-                  $('.val', $('#scope' +i)).html(scope.value * volts);
-                  $('.min', $('#scope' +i)).html(scope.min * volts);
-                  $('.max', $('#scope' +i)).html(scope.max * volts);
-              });
-              window.requestAnimationFrame(update);
-            };
-            update();
-
-          });
-        }
-      });
-    });
-  </script>
+  <script src="FunctionGenerator.js"></script>
+  <script src="arduinoscope.js"></script>
 </html>
