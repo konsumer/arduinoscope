@@ -48,6 +48,8 @@
   <script>
   $(function(){
 
+    var volts = volts;
+
     // fixture
     var board = {
       analogPins: [14,15,16,17,18,19]
@@ -86,9 +88,9 @@
     var update = function(){
       scopes.forEach(function(scope, i){
           scope.value = Math.random();
-          $('.val', $('#scope' +i)).html(scope.value*5);
-          $('.min', $('#scope' +i)).html(scope.min*5);
-          $('.max', $('#scope' +i)).html(scope.max*5);
+          $('.val', $('#scope' +i)).html(scope.value*volts);
+          $('.min', $('#scope' +i)).html(scope.min*volts);
+          $('.max', $('#scope' +i)).html(scope.max*volts);
       });
       window.requestAnimationFrame(update);
     };
