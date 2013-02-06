@@ -3,8 +3,13 @@
  */
 
 var Oscilloscope = function(pin, canvas, color, lineColor){
+	var scope = this;
+
 	this.color = color || 'rgba(255,0,0,0.5)';
 	this.lineColor = lineColor || '#000';
+	
+	this.scaleX=1;
+	this.scaleY=1;
 
 	// public
 	this.pin = pin;
@@ -22,10 +27,10 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
      * included for decoupling data from graphics, later
      */
     this.update = function(){
-    	ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    	ctx.clearRect(0, 0, scope.canvas.width, scope.canvas.height);
 	    
 		// cross-hairs
-	    ctx.strokeStyle = this.lineColor;
+	    ctx.strokeStyle = scope.lineColor;
 	    ctx.beginPath();
 	    ctx.moveTo(canvas.width/2, 0);
 	    ctx.lineTo(canvas.width/2, canvas.height);
@@ -36,10 +41,10 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
 
 	    // values
 	    ctx.beginPath();
-	    ctx.strokeStyle = this.color;
+	    ctx.strokeStyle = scope.color;
 	    ctx.moveTo(0, 0);
-	    this.values.forEach(function(val, x){
-	    	ctx.lineTo(x, val * canvas.height);
+	    scope.values.forEach(function(val, x){
+	    	ctx.lineTo(x * scope.scaleX, val * scope.scaleY * canvas.height);
 	    });
 		ctx.stroke();
 		ctx.closePath();
@@ -68,7 +73,7 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
      */
 	this.__defineGetter__("values", function(){
 		if (values.length >= this.canvas.width){
-        	return values.slice(values.length-this.canvas.width, this.canvas.width);
+        	return values.slice(values.length-canvas.width,values.length);
     	}else{
     		return values.slice(0);
     	}
