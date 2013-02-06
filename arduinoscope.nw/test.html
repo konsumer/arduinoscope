@@ -24,6 +24,10 @@
     body {
       background: #eee;
     }
+    .val, .min, .max {
+      display:inline-block;
+      width: 200px;
+    }
     </style>
    </head>
    <body>
@@ -49,30 +53,35 @@
 
     var scopes = [];
     board.analogPins.forEach(function(pin, i){
-      $c = $('<div class="scope"><span class="label">analog ' + pin + '</span><canvas width="' + ($('.container').width()-20) + '" height="300" id="scope'+pin+'"></canvas>scaleX:<input data-osc="' + i + '" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"> scaleY:<input data-osc="' + i + '" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5"></div>');
+      $c = $('<div class="scope" id="scope'+i+'"><span class="label">analog ' + pin + '</span><canvas width="' + ($('.container').width()-20) + '" height="300"></canvas>val:<span class="val"></span>min:<span class="min"></span> max:<span class="max"></span> <button class="clear" data-osc="' + i + '">clear</button></div><br/>scaleX:<input data-osc="' + i + '" class="scaleX" type="range" step="0.1" value="1" min="0.1", max="5"> scaleY:<input data-osc="' + i + '" class="scaleY" type="range" step="0.1" value="1" min="0.1", max="5">');
       $('.scopes').append($c);
       var osc = new Oscilloscope(pin, $c.find('canvas').get(0));
       osc.color = 'rgba(0,100,' + Math.floor((Math.random()*255)) + ', 0.8)';
       scopes.push(osc);
     });
 
-    $('.scaleX').change(function(){
+    $('input.scaleX').change(function(){
       scopes[$(this).data('osc')].scaleX = $(this).val();
     });
 
-    $('.scaleY').change(function(){
+    $('input.scaleY').change(function(){
       scopes[$(this).data('osc')].scaleY = $(this).val();
     });
 
+    $('button.clear').click(function(){
+      scopes[$(this).data('osc')].values=[];
+    });
+
     var update = function(){
-      scopes.forEach(function(scope){
+      scopes.forEach(function(scope, i){
           scope.value = Math.random();
+          $('.val', $('#scope' +i)).html(scope.value);
+          $('.min', $('#scope' +i)).html(scope.min);
+          $('.max', $('#scope' +i)).html(scope.max);
       });
       window.requestAnimationFrame(update);
     };
     window.requestAnimationFrame(update);
-
-    console.log(scopes);
   })();
 
   </script>

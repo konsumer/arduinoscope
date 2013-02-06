@@ -52,6 +52,20 @@ var Oscilloscope = function(pin, canvas, color, lineColor){
     }
 
 	// getter/setters to do magic
+	// 
+	/**
+     * get min value
+     */
+	this.__defineGetter__("min", function(){
+        return this.values.sort().pop();
+    });
+
+    /**
+     * get max value
+     */
+	this.__defineGetter__("max", function(){
+        return this.values.sort().unshift();
+    });
 
     /**
      * Interface for getting last value
