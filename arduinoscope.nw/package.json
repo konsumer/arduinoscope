@@ -6,7 +6,7 @@
   "keywords": [ "arduino", "oscilloscope" ],
   "window": {
     "icon": "icon.png",
-    "toolbar": false
+    "toolbar": true
   },
   "webkit": {
     "plugin": false

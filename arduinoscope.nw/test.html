@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
+    <link href="http://jasny.github.com/bootstrap/assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" rel="stylesheet">
+    <style>
+    canvas{
+      border: 1px solid #000;
+      margin: 10px;
+    }
+    .scope {
+      width: 100%;
+    }
+    .scope .label {
+      display:block;
+    }
+
+    #topbar {
+      margin-bottom: 10px;
+    }
+
+    body {
+      background: #eee;
+    }
+    </style>
+   </head>
+   <body>
+    <div id="topbar" class="navbar navbar-static-top navbar-inverse">
+      <div class="navbar-inner">
+        <a class="brand">arduinoscope</a>
+      </div>
+    </div>
+    <div class="container">
+        <div class="scopes"></div>
+    </div>
+  </body>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
+  <script src="requestAnimationFrame.js"></script>
+  <script src="oscilloscope.js"></script>
+  <script>
+  (function(){
+    // fixture
+    var board = {
+      analogPins: [14,15,16,17,18,19]
+    };
+
+    var scopes = [];
+    board.analogPins.forEach(function(pin){
+      $c = $('<div class="scope"><span class="label">analog ' + pin + '</span><canvas width="' + ($('.container').width()-20) + '" height="300" id="scope'+pin+'"></canvas></div>');
+      $('.scopes').append($c);
+      scopes.push(new Oscilloscope(pin, $c.find('canvas').get(0)));
+    });
+
+    var update = function(){
+      scopes.forEach(function(scope){
+          scope.value = Math.floor(Math.random()*1024);
+      });
+      window.requestAnimationFrame(update);
+    };
+    window.requestAnimationFrame(update);
+
+    console.log(scopes);
+  })();
+
+  </script>
+</html>
