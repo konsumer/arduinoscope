@@ -4,4 +4,6 @@ This is the Processing library. It has a [Firmata](http://firmata.org) dependenc
 
 Once you have done these 2 things, put the processing/libraries/arduinoscope folder in your processing libraries folder (on mac: `~/Documents/Processing/libraries`.)
 
+You will also need to install [controlP5](http://www.sojamo.de/libraries/controlP5/#installation) to get examples to work.
+
 Now, restart processing, and you should have an arduinoscope example (under File/Examples.) This is the source for the stand-alone apps.
