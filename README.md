@@ -10,10 +10,10 @@ The basic idea with both front-ends is to connect your Arduino running Firmata, 
 
 If you don't care about developing the front-end, or don't want to install any dependencies, or do anything other than just have a working oscilliscope, choose the correct "standalone" zip file for your plaform:
 
-*  [Linux 32-bit](http://konsumer.github.com/arduinoscope/downloads/application.linux32.zip)
-*  [Linux 64-bit](http://konsumer.github.com/arduinoscope/downloads/application.linux64.zip)
-*  [Mac Universal](http://konsumer.github.com/arduinoscope/downloads/application.macosx.zip)
-*  [Windows 32-bit](http://konsumer.github.com/arduinoscope/downloads/application.windows32.zip)
+*  [Linux 32-bit](http://konsumer.github.io/arduinoscope/downloads/application.linux32.zip)
+*  [Linux 64-bit](http://konsumer.github.io/arduinoscope/downloads/application.linux64.zip)
+*  [Mac Universal](http://konsumer.github.io/arduinoscope/downloads/application.macosx.zip)
+*  [Windows 32-bit](http://konsumer.github.io/arduinoscope/downloads/application.windows32.zip)
 
 
 ## Processing
