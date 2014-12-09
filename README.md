@@ -24,6 +24,6 @@ This is my new and favorite GUI for Arduinoscope.  You will need to install [nod
 
 ## Modification
 
-This is by no means the most efficient or best osciloscope you can build. It's meant to be simple & easy to modify, so you can do whatever you want with it. Checkout [this wiki article](https://github.com/konsumer/arduinoscope/wiki/Modification) to see how to easily read a differnt voltage range, for example.
+This is by no means the most efficient or best osciloscope you can build. It's meant to be simple & easy to modify, so you can do whatever you want with it. Checkout [this wiki article](https://github.com/konsumer/arduinoscope/wiki/Modification) to see how to easily read a different voltage range, for example.
 
 
