@@ -1,4 +1,7 @@
 # Arduinoscope
+![] (https://img.shields.io/github/forks/pandao/editor.md.svg) ![]
+(https://img.shields.io/github/release/pandao/editor.md.svg)
+
 
 This is the current version of my Arduino-powered, low-resolution, multi-channel oscilliscope. I made 2 frontends, that both speak [firmata](http://firmata.org), so you will need to install the Firmata firmware on your Arduino (File -> Open -> Examples > Library-Firmata > StandardFirmata, in latest Arduino IDE.)
 
